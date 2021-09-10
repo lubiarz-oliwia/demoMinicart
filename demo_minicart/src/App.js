@@ -9,7 +9,7 @@ import productList from './productList';
 function App() {
   const [items, setItems] = useState([...productList.items]);
   const productsSum = items.reduce((a, b) => a + b.qty * b.price.current_price, 0);
-  const totalSum = productsSum + productList.shipping;
+  const totalSum = (productsSum + productList.shipping).toFixed(2);
 
   const removeProduct = (product) => {
     setItems([...items.filter((item) => item.id !== product.id)]);
@@ -44,38 +44,45 @@ function App() {
     );
   }
 
+  const checkout = () => {
+    setItems([...productList.items])
+  }
+
   return (
     <div className='container'>
       <div className='basket_container'>
         <CartHeader
           amount_of_items={items.length}
         />
-        {items.map((item) => {
-          return (
-            <div className='item_container'>
-              <ItemDetails
-                key={item.id}
-                image={item.image}
-                product_name={item.product_name}
-                product_options={item.product_options}
-                removeProduct={() => removeProduct(item)}
-              />
-              <ItemQuantity
-                key={item}
-                quantity={item.qty}
-                old_price={item.price.old_price}
-                current_price={item.price.current_price}
-                currency={productList.currency}
-                decrease_quantity={() => decreaseQuantity(item)}
-                increase_quantity={() => increaseQuantity(item)}
-              />
-            </div>
-          )
-        })}
+        <div class='scroll'>
+          {items.map((item) => {
+            return (
+              <div className='item_container'>
+                <ItemDetails
+                  key={item.id}
+                  image={item.image}
+                  product_name={item.product_name}
+                  product_options={item.product_options}
+                  removeProduct={() => removeProduct(item)}
+                />
+                <ItemQuantity
+                  key={item}
+                  quantity={item.qty}
+                  old_price={item.price.old_price}
+                  current_price={item.price.current_price}
+                  currency={productList.currency}
+                  decrease_quantity={() => decreaseQuantity(item)}
+                  increase_quantity={() => increaseQuantity(item)}
+                />
+              </div>
+            )
+          })}
+        </div>
         <CartFooter
           shipping_price={productList.shipping}
           currency={productList.currency}
           total_sum={totalSum}
+          checkout={checkout}
         />
       </div>
     </div>

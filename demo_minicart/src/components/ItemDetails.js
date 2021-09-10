@@ -5,24 +5,25 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 function ItemDetails({ image, product_name, product_options, removeProduct }) {
     return (
         <div className='item_details'>
-            <img 
-            src={image} 
-            alt={product_name} 
+            <img
+                src={image}
+                alt={product_name}
             />
-            <div>
+            <div className='item_details_product'>
                 <div>
-                    <h1>{product_name} </h1>
+                    <p>{product_name} </p>
                     {product_options.map((item, index) => {
                         return (
-                            <p 
-                            key={index}
-                            >{item.name}: {item.value}</p>
+                            <p
+                                key={index}
+                            >{item.name}: <span>{item.value}</span></p>
                         )
                     })}
                 </div>
-                <FontAwesomeIcon 
-                icon={faTimes} 
-                onClick={removeProduct} 
+                <FontAwesomeIcon
+                    icon={faTimes}
+                    onClick={removeProduct}
+                    className='close_icon'
                 />
             </div>
         </div>
